@@ -3,6 +3,57 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input CatInput {
+  name: String!
+  age: Int!
+  breed: String!
+}
+
+type CatType {
+  id: ID!
+  name: String!
+  age: Int!
+  breed: String!
+}
+
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+type Mutation {
+  createCat(input: WechatInput!): WechatType!
+  register(input: UserInput!): UserType!
+}
+
 type Query {
   hello: String!
+  cats: [WechatType!]!
+  users: [UserType!]!
+}
+
+input UserInput {
+  userName: String!
+  passWord: String!
+}
+
+type UserType {
+  id: ID!
+  userName: String!
+  passWord: String!
+}
+
+input WechatInput {
+  name: String!
+  type: Int!
+  appId: String!
+  appSecret: String!
+  createdAt: DateTime!
+}
+
+type WechatType {
+  id: ID!
+  name: String!
+  age: Int!
+  breed: String!
 }
