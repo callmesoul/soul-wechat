@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CatsModule } from './cats/cats.module';
 import { WechatsModule } from './wechats/wechats.module';
+import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 
 
@@ -12,11 +13,12 @@ import { UsersModule } from './users/users.module';
   imports: [
     MongooseModule.forRoot('mongodb://localhost/soul-wechat'),
     CatsModule,
-    UsersModule,
     WechatsModule,
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-  })
+    }),
+    AuthModule,
+    UsersModule,
 ],
   controllers: [AppController],
   providers: [AppService,]
