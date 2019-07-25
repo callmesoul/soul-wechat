@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-export const WechatSchema = new mongoose.Schema({
+export const UserSchema = new mongoose.Schema({
   username: String,
   password: String,
 });

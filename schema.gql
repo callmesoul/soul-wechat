@@ -23,11 +23,28 @@ scalar DateTime
 
 type Mutation {
   createCat(input: WechatInput!): WechatType!
+  login(input: UserInput!): TokenType!
+  register(input: UserInput!): TokenType!
 }
 
 type Query {
-  hello: String!
+  hello: UserType!
   cats: [WechatType!]!
+}
+
+type TokenType {
+  token: String!
+}
+
+input UserInput {
+  username: String!
+  password: String!
+}
+
+type UserType {
+  id: ID!
+  username: String!
+  password: String!
 }
 
 input WechatInput {

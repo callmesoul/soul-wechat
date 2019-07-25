@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 
-export interface Wechat extends Document {
+export interface User extends Document {
   readonly username: string;
-  readonly password: number;
+  readonly password: string;
 }

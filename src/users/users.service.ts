@@ -1,32 +1,21 @@
+import { Model } from 'mongoose'
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from './interfaces/user.interface'
+import { UserType } from './dto/create-user.dto';
+import { UserInput } from './inputs/user.input';
 
-export type User = any;
+
 
 @Injectable()
 export class UsersService {
-  private readonly users: User[];
+  constructor(@InjectModel('User') private readonly wechatModel: Model<User>) {}
 
-  constructor() {
-    this.users = [
-      {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      },
-      {
-        userId: 2,
-        username: 'chris',
-        password: 'secret',
-      },
-      {
-        userId: 3,
-        username: 'maria',
-        password: 'guess',
-      },
-    ];
+  async findOneByUserName(username: string): Promise<UserType | null> {
+    return await this.wechatModel.findOne().where({username:username});
   }
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+  async createUser(user: UserInput): Promise<UserType>{
+    return await this.wechatModel.create(user);
   }
 }
