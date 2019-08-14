@@ -3,6 +3,17 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AdminInput {
+  username: String!
+  password: String!
+  email: String!
+}
+
+input AdminLoginInput {
+  password: String!
+  email: String!
+}
+
 input CatInput {
   name: String!
   age: Int!
@@ -22,14 +33,33 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Mutation {
-  createCat(input: WechatInput!): WechatType!
+  createCat(input: CatInput!): CatType!
+  createWechat(input: WechatInput!): WechatType!
+  removeWechat(id: String!): Boolean!
+  checkBindStatus(wechatId: String!): Boolean!
+  syncWechat(wechatId: String!): Boolean!
+  createUseTag(name: String!, wechatId: String!): UserTagType!
+  updateUserRemark(userId: String!, remark: String!): Boolean!
+  updateUserTag(userId: String!, tagid_list: [Int!] = []): Boolean!
   login(input: UserInput!): TokenType!
+  adminLogin(input: AdminLoginInput!): TokenType!
+  adminRegister(input: AdminInput!): TokenType!
   register(input: UserInput!): TokenType!
+}
+
+type PaginationType {
+  total: Int!
+  pageCount: Int!
+  page: Int!
+  pageSize: Int!
 }
 
 type Query {
   hello: UserType!
-  cats: [WechatType!]!
+  cats: [CatType!]!
+  wechats: [WechatType!]!
+  getUsers(nickname: String = "", wechatId: String!, pageSize: Float = 10, page: Float = 1): UserPagination!
+  getUsersTags(wechatId: String!): [UserTagType!]!
 }
 
 type TokenType {
@@ -37,27 +67,77 @@ type TokenType {
 }
 
 input UserInput {
-  username: String!
-  password: String!
+  tagid_list: [Int!]!
+  subscribe: Int!
+  openid: String!
+  nickname: String!
+  sex: String!
+  language: String!
+  city: String!
+  province: String!
+  country: String!
+  headimgurl: String!
+  subscribe_time: Int!
+  unionid: String!
+  remark: String!
+  groupid: String!
+  subscribe_scene: String!
+  qr_scene: Int!
+  qr_scene_str: String!
+  wechatId: String!
+}
+
+type UserPagination {
+  users: [UserType!]!
+  pagination: PaginationType!
+}
+
+type UserTagType {
+  _id: ID!
+  count: Int!
+  id: Int!
+  name: String!
+  wechatId: String!
 }
 
 type UserType {
   id: ID!
-  username: String!
-  password: String!
+  subscribe: Int!
+  openid: String!
+  nickname: String!
+  sex: String!
+  language: String!
+  city: String!
+  province: String!
+  country: String!
+  headimgurl: String!
+  subscribe_time: DateTime!
+  unionid: String!
+  remark: String!
+  groupid: String!
+  tagid_list: [Int!]!
+  subscribe_scene: String!
+  qr_scene: Int!
+  qr_scene_str: String!
+  wechatId: String
 }
 
 input WechatInput {
   name: String!
-  type: Int!
   appId: String!
+  type: Int!
   appSecret: String!
-  createdAt: DateTime!
+  encrypt: Boolean!
 }
 
 type WechatType {
   id: ID!
+  type: Int!
   name: String!
-  age: Int!
-  breed: String!
+  appId: String!
+  appSecret: String!
+  token: String!
+  encrypt: Boolean!
+  encodingAesKey: String!
+  userId: ID!
 }

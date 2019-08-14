@@ -4,11 +4,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './users.schema';
 import { UsersResolver } from './users.resolver';
 import { AuthModule } from '../auth/auth.module'
+import { WechatsModule } from '../wechats/wechats.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{name: 'User', schema: UserSchema}]),
-
   ],
   providers: [UsersService, UsersResolver],
   exports: [UsersService],

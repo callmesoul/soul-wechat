@@ -7,6 +7,10 @@ import { CatsModule } from './cats/cats.module';
 import { WechatsModule } from './wechats/wechats.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { AdminModule } from './admins/admins.module';
+import { AccessTokenApiService } from './access-token-api/access-token-api.service';
+import { MsgController } from './msg/msg.controller';
+import { UsersTagsModule } from './users-tags/users-tags.module';
 
 
 @Module({
@@ -14,13 +18,16 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRoot('mongodb://localhost/soul-wechat'),
     CatsModule,
     WechatsModule,
-    GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
-    }),
     AuthModule,
     UsersModule,
+    GraphQLModule.forRoot({
+      context: ({ req }) => ({ req }),
+      autoSchemaFile: 'schema.gql',
+    }),
+    AdminModule,
+    UsersTagsModule
 ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [AppController, MsgController],
+  providers: [AppService, AccessTokenApiService]
 })
 export class AppModule {}

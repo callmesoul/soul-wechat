@@ -1,15 +1,15 @@
-import { InputType, Field, Int } from 'type-graphql'
+import { InputType, Field, Int, ID,  } from 'type-graphql'
 
 @InputType()
 export class WechatInput{
     @Field()
-    readonly name: string;
+    readonly name!: string;
+    @Field()
+    readonly appId: string;
     @Field(()=>Int)
     readonly type: number;
     @Field()
-    readonly appId: string;
-    @Field()
     readonly appSecret: string;
     @Field()
-    readonly createdAt: Date;
+    readonly encrypt: boolean;
 }
