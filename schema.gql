@@ -58,7 +58,7 @@ type Query {
   hello: UserType!
   cats: [CatType!]!
   wechats: [WechatType!]!
-  getUsers(nickname: String = "", wechatId: String!, pageSize: Float = 10, page: Float = 1): UserPagination!
+  getUsers(tagId: Int, nickname: String = "", wechatId: String!, pageSize: Int = 10, page: Int = 1): UserPagination!
   getUsersTags(wechatId: String!): [UserTagType!]!
 }
 
@@ -85,6 +85,7 @@ input UserInput {
   qr_scene: Int!
   qr_scene_str: String!
   wechatId: String!
+  status: Int!
 }
 
 type UserPagination {

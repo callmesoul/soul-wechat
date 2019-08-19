@@ -20,6 +20,7 @@ const UserSchema = new mongoose.Schema({
   qr_scene: Number,
   qr_scene_str: String,
   wechatId: String,
+  status: { type: Number, default: 1 }, // 状态 1:正常 2.黑名单
 });
 
 UserSchema.statics = {

@@ -79,13 +79,17 @@ export class WechatsService implements OnModuleInit {
         this.usersTagsService.create(tag);
       }
     })
+    // 获取关注公众号用户openid列表
     let res = await UserApi.getFollowers('');
     res = JSON.parse(res);
     if (res && res.data && res.data.openid) {
       let openids = res.data.openid;
       for (let n = 0; n < openids.length; n++) {
+        // 查数据库有没有当前用户
         let user = await this.userService.findByOpenId(openids[n]);
+        // 没有该用户，创建
         if (!user) {
+          // 获取用户信息
           let user = await UserApi.getUserInfo(openids[n], 'zh_CN');
           if (user) {
             user = JSON.parse(user);
@@ -93,8 +97,35 @@ export class WechatsService implements OnModuleInit {
             this.userService.createUser(user);
           }
         }else{
+          // 已该用户，更新
           let _user = await UserApi.getUserInfo(openids[n], 'zh_CN');
           this.userService.update(_user);
+        }
+      }
+      // 获取黑名单 openid列表
+      let getBackRes = await UserApi.getBlackList();
+      getBackRes = JSON.parse(getBackRes);
+      if (getBackRes && getBackRes.data && getBackRes.data.openid) {
+        let openids = res.data.openid;
+        for (let n = 0; n < openids.length; n++) {
+          // 查数据库有没有当前用户
+          let user = await this.userService.findByOpenId(openids[n]);
+          // 没有该用户，创建
+          if (!user) {
+            // 获取用户信息
+            let user = await UserApi.getUserInfo(openids[n], 'zh_CN');
+            if (user) {
+              user = JSON.parse(user);
+              user.wechatId = wechat.id;
+              user.status = 2;
+              this.userService.createUser(user);
+            }
+          }else{
+            // 已该用户，更新
+            let _user = await UserApi.getUserInfo(openids[n], 'zh_CN');
+            _user.status = 2;
+            this.userService.update(_user);
+          }
         }
       }
       return true;

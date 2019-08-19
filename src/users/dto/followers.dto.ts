@@ -1,15 +1,15 @@
-import { InputType, Field, Int} from 'type-graphql'
+import { ObjectType, Field, ID, Int } from 'type-graphql'
 
-@InputType()
-export class UserInput{
-    @Field(()=>[Int!])
-    readonly tagid_list!:number[];
+@ObjectType()
+export class Fowers {
+    @Field(() => Int)
+    readonly total: number;
     @Field(()=>Int)
-    readonly subscribe: number;
+    readonly count: number;
     @Field()
-    readonly openid: string;
+    readonly data: string;
     @Field()
-    readonly nickname: string;
+    readonly next_openid: string;
     @Field()
     readonly sex: string;
     @Field()
@@ -30,14 +30,12 @@ export class UserInput{
     readonly remark: string;
     @Field()
     readonly groupid: string;
+    @Field(()=>[Int!])
+    readonly tagid_list!:number[];
     @Field()
     readonly subscribe_scene:string;
     @Field(()=>Int)
     readonly qr_scene:number;
     @Field()
     readonly qr_scene_str:string;
-    @Field()
-    readonly wechatId:string;
-    @Field(()=>Int!)
-    readonly status!:number;
-}
+  }
