@@ -63,7 +63,7 @@
     "typescript": "3.4.3",
     "wait-on": "^3.2.0",
     "webpack": "^4.35.3",
-    "webpack-cli": "^3.3.6",
+    "webpack-cli": "^3.3.12",
     "webpack-graphql-loader": "^1.0.2",
     "webpack-node-externals": "^1.7.2"
   },
